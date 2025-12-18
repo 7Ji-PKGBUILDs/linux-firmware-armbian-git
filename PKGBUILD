@@ -33,7 +33,7 @@ pkgver() {
 package() {
   local _prefix="${pkgdir}"/usr/lib
   install -d "${_prefix}"
-  pacman -Ql linux-firmware | sed -n 's|^linux-firmware /usr/lib/\(firmware/.*\)|\1|p' | sort | uniq > linux-firmware.list
+  pacman -Ql $(pacman -Qq | grep '^linux-firmware') | sed -n 's|^linux-firmware-[^ ]* /usr/lib/\(firmware/.*\)|\1|p' | sort | uniq > linux-firmware.list
   local _file _target _link
   if [[ "${CARCH}" == 'aarch64' ]]; then
     local _nocomp='yes'
